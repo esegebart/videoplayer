@@ -2,7 +2,7 @@
 // https://aboutreact.com/react-native-video/
 
 // import React in our code
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 
 // import all the components we are going to use
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
@@ -12,11 +12,8 @@ import Video from 'react-native-video';
 import ProgressBar from "react-native-progress/Bar";
 import Icon from "react-native-vector-icons/FontAwesome";
 import OverlayExample from "./components/OverlayExample";
+import PauseButton from 'react-native-vector-icons/AntDesign';
 
-//Media Controls to control Play/Pause/Seek and full screen
-import
-  MediaControls, {PLAYER_STATES}
-from 'react-native-media-controls';
 
 const App = (props) => {
   const videoPlayer = useRef(null);
@@ -25,9 +22,6 @@ const App = (props) => {
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [paused, setPaused] = useState(false);
-  const [
-    playerState, setPlayerState
-  ] = useState(PLAYER_STATES.PLAYING);
   const [screenType, setScreenType] = useState('content');
 
   const onSeek = (seek) => {
@@ -35,21 +29,19 @@ const App = (props) => {
     videoPlayer.current.seek(seek);
   };
 
-  const onPaused = (playerState) => {
+  const onPaused = () => {
     //Handler for Video Pause
     setPaused(!paused);
-    setPlayerState(playerState);
   };
 
   const onReplay = () => {
     //Handler for Replay
-    setPlayerState(PLAYER_STATES.PLAYING);
     videoPlayer.current.seek(0);
   };
 
   const onProgress = (data) => {
     // Video Player will progress continue even if it ends
-    if (!isLoading && playerState !== PLAYER_STATES.ENDED) {
+    if (!isLoading) {
       setCurrentTime(data.currentTime);
     }
   };
@@ -61,7 +53,7 @@ const App = (props) => {
 
   const onLoadStart = (data) => setIsLoading(true);
 
-  const onEnd = () => setPlayerState(PLAYER_STATES.ENDED);
+  // const onEnd = () => setPlayerState(PLAYER_STATES.ENDED);
 
   const onError = () => alert('Oh! ', error);
 
@@ -88,7 +80,7 @@ const App = (props) => {
   return (
     <View style={{flex: 1}}>
       <Video
-        onEnd={onEnd}
+        // onEnd={onEnd}
         onLoad={onLoad}
         onLoadStart={onLoadStart}
         onProgress={onProgress}
@@ -103,8 +95,7 @@ const App = (props) => {
         style={styles.mediaPlayer}
         volume={10}
       />
-      <OverlayExample style={styles.overlay}
-      />
+      <OverlayExample style={styles.overlay} onPause={onPaused} isPaused={paused}/>      
     </View>
   );
 };
@@ -134,5 +125,5 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     position: 'absolute'
-  }
+  },
 });
