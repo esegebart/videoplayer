@@ -22,26 +22,26 @@ const toggleOverlay = () => {
           <Tag 
             style={styles.tagButton}
             name="tag" 
-            size={30}
+            size={25}
           />
         </TouchableOpacity>
         <TouchableOpacity style={styles.shareButtonContainer} onPress={console.log('do nothing')}>
           <Share 
             style={styles.shareButton}
             name="share" 
-            size={30}
+            size={25}
           />
         </TouchableOpacity>
       </View>
       <Overlay isVisible={visible} onBackdropPress={toggleOverlay}>
         <View>
-          <TouchableOpacity style={styles.playButtonContainer} onPress={onPress}>
+          <TouchableOpacity onPress={onPress}>
             {isPaused ? (
-              <PlayButton
+              <PlayButton style={styles.playButton}
                 name="play" 
                 size={30}
                 onPress={onPause} />
-            ): (
+              ) : (
               <PauseButton style={styles.pauseButton}
                 name="pause" 
                 size={30}
@@ -49,9 +49,6 @@ const toggleOverlay = () => {
               />
             )}
           </TouchableOpacity>
-        </View>
-        <View>
-          
         </View>
       </Overlay>
     </TouchableOpacity>
@@ -89,7 +86,10 @@ const styles = StyleSheet.create({
     height: '100%',
     position: 'absolute'
   },
-    pauseButton: {
+  playButton: {
+    color: 'rgba(0, 0, 0, 0.5)'
+  },
+  pauseButton: {
     color: 'black',
   },
 });
