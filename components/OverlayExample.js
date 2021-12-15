@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { Button, Overlay } from 'react-native-elements';
 import PauseButton from 'react-native-vector-icons/AntDesign';
-import PlayButton from 'react-native-vector-icons/AntDesign';
+import PlayButton from 'react-native-vector-icons/FontAwesome';
 import Tag from 'react-native-vector-icons/AntDesign';
 import Share from 'react-native-vector-icons/FontAwesome';
 
@@ -22,23 +22,22 @@ const toggleOverlay = () => {
           <Tag 
             style={styles.tagButton}
             name="tag" 
-            size={25}
+            size={20}
           />
         </TouchableOpacity>
         <TouchableOpacity style={styles.shareButtonContainer} onPress={console.log('do nothing')}>
           <Share 
             style={styles.shareButton}
             name="share" 
-            size={25}
+            size={20}
           />
         </TouchableOpacity>
       </View>
       <Overlay isVisible={visible} onBackdropPress={toggleOverlay}>
-        <View>
-          <TouchableOpacity onPress={onPress}>
+          <TouchableOpacity style={styles.playPauseContainer} onPress={onPress}>
             {isPaused ? (
               <PlayButton style={styles.playButton}
-                name="play" 
+                name="play-circle" 
                 size={30}
                 onPress={onPause} />
               ) : (
@@ -49,7 +48,6 @@ const toggleOverlay = () => {
               />
             )}
           </TouchableOpacity>
-        </View>
       </Overlay>
     </TouchableOpacity>
   );
@@ -73,7 +71,8 @@ const styles = StyleSheet.create({
   shareButtonContainer: {
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     padding: 10,
-    borderRadius: 50
+    borderRadius: 50,
+    marginTop: 5
   },
   tagButton: {
     color: 'white',
@@ -84,7 +83,10 @@ const styles = StyleSheet.create({
   overlay: {
     width: '100%',
     height: '100%',
-    position: 'absolute'
+    position: 'absolute',
+  },
+  playPauseContainer: {
+
   },
   playButton: {
     color: 'rgba(0, 0, 0, 0.5)'
