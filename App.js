@@ -5,14 +5,16 @@
 import React, {useState, useRef, useEffect} from 'react';
 
 // import all the components we are going to use
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 
 //Import React Native Video to play video
 import Video from 'react-native-video';
 import ProgressBar from "react-native-progress/Bar";
 import Icon from "react-native-vector-icons/FontAwesome";
 import OverlayExample from "./components/OverlayExample";
-import PauseButton from 'react-native-vector-icons/AntDesign';
+import VideoInfo from "./components/VideoInfo";
+import TouchableIcon from "./components/TouchableIcon";
+import MediaControls from "./components/MediaControls";
 
 
 const App = (props) => {
@@ -23,6 +25,7 @@ const App = (props) => {
   const [isLoading, setIsLoading] = useState(true);
   const [paused, setPaused] = useState(false);
   const [screenType, setScreenType] = useState('content');
+
 
   const onSeek = (seek) => {
     //Handler for change in seekbar
@@ -77,6 +80,7 @@ const App = (props) => {
 
   const onSeeking = (currentTime) => setCurrentTime(currentTime);
 
+
   return (
     <View style={{flex: 1}}>
       <Video
@@ -95,7 +99,8 @@ const App = (props) => {
         style={styles.mediaPlayer}
         volume={10}
       />
-      <OverlayExample style={styles.overlay} onPause={onPaused} isPaused={paused}/>      
+        <OverlayExample  /> 
+        <MediaControls onPause={onPaused} isPaused={paused} />
     </View>
   );
 };
@@ -118,12 +123,17 @@ const styles = StyleSheet.create({
     left: 0,
     bottom: 0,
     right: 0,
-    backgroundColor: 'black',
+    backgroundColor: 'white',
     justifyContent: 'center',
   },
-  overlay: {
-    width: '100%',
-    height: '100%',
-    position: 'absolute'
+    touchIcon: {
+    alignItems: "center",
+    justifyContent: "center",
   },
+  iconText: {
+    marginTop: 5,
+  },
+  videoInfo: {
+
+  }
 });
